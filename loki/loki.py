@@ -23,21 +23,19 @@ def format_keywords(keywords):
     for term_breakdown in keywords:
         kwd = "".join(term_breakdown)
         fmt_keywords.append(kwd)
-
     return ",".join(fmt_keywords)
+
 
 def start_harvester(args):
     keywords = None
     if args.filter_type == 'keyword':
         keywords = format_keywords(args.keywords)
-        print(keywords)
     h = Harvester(filter_type=args.filter_type, keywords=keywords)
     h.stream()
 
 
 def main():
     cli = Cli()
-    print(cli.args)
     start_harvester(cli.args)
 
 

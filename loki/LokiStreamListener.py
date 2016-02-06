@@ -8,8 +8,8 @@ Class for the custom stream listener passed to Tweepy
 
 # Python standard library assets
 import json
+import pickle
 import sys
-from time import gmtime, strftime
 
 # 3rd Party assets
 import redis
@@ -33,6 +33,8 @@ class LokiStreamListener(tweepy.StreamListener):
         self.filter_type = filter_type
         self.analyzer = None
         self.r = redis.StrictRedis(host='localhost', port=6379, db=0)
+        self.p = self.r.pubsub()
+        self.p.subscribe('loki01')
 
         super(tweepy.StreamListener, self).__init__()
 
@@ -72,7 +74,8 @@ class LokiStreamListener(tweepy.StreamListener):
                 status.created_at.strftime("%a, %d %b %Y %H:%M:%S +0000")
 
             json_data = json.dumps(data)
-            self.r.set(data['id_str'], json_data)
+            # self.r.set(data['id_str'], json_data)
+            self.r.publish('loki01', pickle.dumps(json_data))
 
     # Execute on error
     def on_error(self, status_code):
