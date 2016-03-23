@@ -15,6 +15,9 @@ import sys
 import redis
 import tweepy
 
+# Project assets
+from loki.utils import log_if_exists
+
 
 __author__ = 'Jared M Smith'
 __license__ = 'MIT'
@@ -28,9 +31,12 @@ __email__ = 'jared@jaredsmith.io'
 class LokiStreamListener(tweepy.StreamListener):
 
     # Initialize the class
-    def __init__(self, api, filter_type):
+    def __init__(self, api, filter_type, subscribe=True, logger=None, statistics=False):
         self.api = api
         self.filter_type = filter_type
+        self.logger = logger
+        self.statistics = statistics
+        self.subscribe = subscribe
         self.analyzer = None
         self.r = redis.StrictRedis(host='localhost', port=6379, db=0)
         self.p = self.r.pubsub()
@@ -43,7 +49,7 @@ class LokiStreamListener(tweepy.StreamListener):
         data = dict()
         if status.coordinates is not None \
                 and status.coordinates['type'] == 'Point':
-            print('Status Text: {}'.format(status.text))
+            log_if_exists(self.logger, 'Status Text: {}'.format(status.text), 'DEBUG')
 
             data['text'] = status.text
             data['lon'] = status.coordinates['coordinates'][0]
