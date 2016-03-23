@@ -35,7 +35,7 @@ class Harvester(object):
     # Initialize the class
     def __init__(self, logger=None, filter_type='location',
                  location=[-167.344, -57.704, 178.594, 74.9594],
-                 keywords=None):
+                 keywords=None, statistics=False):
         self.logger = logger
         self.filter_type = filter_type
         self.location = location
@@ -43,6 +43,7 @@ class Harvester(object):
         log_if_exists(self.logger, self.location, 'DEBUG')
 
         self.keywords = keywords
+        self.statistics = statistics
         self.settings = Settings()
         self.auth = tweepy.OAuthHandler(self.settings.CONSUMER_KEY,
                                         self.settings.CONSUMER_SECRET)
