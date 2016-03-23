@@ -22,17 +22,17 @@ __email__ = 'jared@jaredsmith.io'
 class Cli:
 
     def __init__(self):
-        self.parser = self.setup_argparser()
-        self.args = self.parser.parse_args()
+        self.__parser = self.__setup_argparser()
+        self.args = self.__parser.parse_args()
 
-    def check_location(self, coords):
+    def __check_location(self, coords):
         if len(coords) != 4:
             raise argparse.ArgumentTypeError(textwrap.dedent('''\
                                              Must specify only four coordinate
                                              points for the bounding box.'''))
         return list
 
-    def setup_argparser(self):
+    def __setup_argparser(self):
         parser = argparse.ArgumentParser(prog='loki',
                                          formatter_class=RawTextHelpFormatter,
                                          description=textwrap.dedent('''\
@@ -59,7 +59,7 @@ class Cli:
                                  put on the twitter stream. Default is
                                  location.'''))
         parser.add_argument('--location', dest='location', required=False,
-                            type=self.check_location, nargs='+',
+                            type=self.__check_location, nargs='+',
                             help=textwrap.dedent('''\
                                  Bounding box of lats/lons. Specify four
                                  coordinate points representing the four
@@ -68,14 +68,14 @@ class Cli:
         parser.add_argument('--keywords', dest='keywords', required=False,
                             type=list, nargs='+',
                             help=textwrap.dedent('''\
-                                 Keywords to filter by. Only used if filter_type
+                                 Keywords to filter by.
+                                 Only used if filter_type
                                  is keyword.'''))
-        parser.add_argument('--region-statistics', dest='region_statistics', required=False,
+        parser.add_argument('--statistics', dest='statistics', required=False,
                             type=bool, choices=(True, False), default=False,
                             help=textwrap.dedent('''\
-                                 Collect and log statistics about a region being streamed.
-                                 Only works if filter-type is location and location
-                                 is defined.'''))
+                                 Collect and log statistics about what is
+                                                 being streamed.'''))
         parser.add_argument('--log', required=False, type=bool,
                             choices=(True, False),
                             dest='log', default=True,
