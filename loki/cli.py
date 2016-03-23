@@ -60,6 +60,7 @@ class Cli:
                                  location.'''))
         parser.add_argument('--location', dest='location', required=False,
                             type=self.__check_location, nargs='+',
+                            default=[-167.344, -57.704, 178.594, 74.9594],
                             help=textwrap.dedent('''\
                                  Bounding box of lats/lons. Specify four
                                  coordinate points representing the four
@@ -86,6 +87,11 @@ class Cli:
                             help=textwrap.dedent('''\
                                  Collect and log statistics about what is
                                  being streamed.'''))
+        parser.add_argument('--sql-db-path', dest='sql_db_path', required=False,
+                            type=str,  default=False,
+                            help=textwrap.dedent('''\
+                                 Path to SQLite3 database to collect statistics
+                                 and other data in.'''))
         parser.add_argument('--log', required=False, type=bool,
                             choices=(True, False),
                             dest='log', default=True,
