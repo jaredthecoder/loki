@@ -10,7 +10,7 @@ This file contains the main routine for the entire package. Orchestrates the res
 from loki.Harvester import Harvester
 from loki.Cli import Cli
 from loki.LokiLogger import LokiLogger
-from loki.utils import log_if_exists
+from loki.utils import log_if_exists, format_keywords
 
 
 __author__ = 'Jared M Smith'
@@ -18,14 +18,6 @@ __license__ = 'MIT'
 __version__ = '0.1.0'
 __maintainer__ = 'Jared M Smith'
 __email__ = 'jared@jaredsmith.io'
-
-
-def format_keywords(keywords):
-    fmt_keywords = []
-    for term_breakdown in keywords:
-        kwd = "".join(term_breakdown)
-        fmt_keywords.append(kwd)
-    return ",".join(fmt_keywords)
 
 
 def start_harvester(args, logger=None):
