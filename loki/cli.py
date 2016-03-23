@@ -71,11 +71,21 @@ class Cli:
                                  Keywords to filter by.
                                  Only used if filter_type
                                  is keyword.'''))
+        parser.add_argument('--redis', dest='redis', required=False,
+                            type=bool, choices=(True, False), default=False,
+                            help=textwrap.dedent('''\
+                                 Whether to use redis or not to
+                                 push statuses to a channel.'''))
+        parser.add_argument('--redis_channel', dest='redis_channel', required=False,
+                            type=str, default='loki01',
+                            help=textwrap.dedent('''\
+                                 If the redis option is enabled, then this is the
+                                 name of the channel to push statuses to.'''))
         parser.add_argument('--statistics', dest='statistics', required=False,
                             type=bool, choices=(True, False), default=False,
                             help=textwrap.dedent('''\
                                  Collect and log statistics about what is
-                                                 being streamed.'''))
+                                 being streamed.'''))
         parser.add_argument('--log', required=False, type=bool,
                             choices=(True, False),
                             dest='log', default=True,

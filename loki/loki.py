@@ -33,9 +33,7 @@ def start_harvester(args, logger=None):
     if args.filter_type == 'keyword':
         keywords = format_keywords(args.keywords)
     log_if_exists(logger, 'Creating harvester.', 'DEBUG')
-    h = Harvester(logger=logger, filter_type=args.filter_type,
-                  keywords=keywords, stats=args.statistics,
-                  subscribe=args.subscribe)
+    h = Harvester(logger=logger, keywords=keywords, args=args)
     log_if_exists(logger, 'Starting the stream...', 'INFO')
     h.stream()
 

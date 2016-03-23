@@ -31,16 +31,18 @@ __email__ = 'jared@jaredsmith.io'
 class LokiStreamListener(tweepy.StreamListener):
 
     # Initialize the class
-    def __init__(self, api, filter_type, subscribe=True, logger=None, statistics=False):
+    def __init__(self, api, filter_type, args, logger=None):
+        self.cli_args = args
         self.api = api
         self.filter_type = filter_type
         self.logger = logger
-        self.statistics = statistics
-        self.subscribe = subscribe
+        self.statistics = cli.statistics
+        self.redis = cli.redis
         self.analyzer = None
-        self.r = redis.StrictRedis(host='localhost', port=6379, db=0)
-        self.p = self.r.pubsub()
-        self.p.subscribe('loki01')
+        if self.redis:
+            self.r = redis.StrictRedis(host='localhost', port=6379, db=0)
+            self.p = self.r.pubsub()
+            self.p.subscribe(self.cli_args.redis_channel)
 
         super(tweepy.StreamListener, self).__init__()
 
@@ -81,7 +83,8 @@ class LokiStreamListener(tweepy.StreamListener):
 
             json_data = json.dumps(data)
             # self.r.set(data['id_str'], json_data)
-            self.r.publish('loki01', pickle.dumps(json_data))
+            if self.redis:
+                self.r.publish(self.cli_args.redis_channel, pickle.dumps(json_data))
 
     # Execute on error
     def on_error(self, status_code):

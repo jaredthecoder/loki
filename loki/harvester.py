@@ -6,9 +6,6 @@ Ingests the Twitter Streaming API
 """
 
 
-# Python standard library assets
-import sys
-
 # 3rd Party assets
 import tweepy
 
@@ -35,7 +32,7 @@ class Harvester(object):
     # Initialize the class
     def __init__(self, logger=None, filter_type='location',
                  location=[-167.344, -57.704, 178.594, 74.9594],
-                 keywords=None, statistics=False):
+                 keywords=None, statistics=False, subscribe=True):
         self.logger = logger
         self.filter_type = filter_type
         self.location = location
@@ -44,13 +41,16 @@ class Harvester(object):
 
         self.keywords = keywords
         self.statistics = statistics
+        self.subscribe = subscribe
         self.settings = Settings()
         self.auth = tweepy.OAuthHandler(self.settings.CONSUMER_KEY,
                                         self.settings.CONSUMER_SECRET)
         self.auth.set_access_token(self.settings.ACCESS_TOKEN,
                                    self.settings.ACCESS_TOKEN_SECRET)
         self.api = tweepy.API(self.auth)
-        self.stream_listener = LokiStreamListener(self.api, self.filter_type)
+        self.stream_listener = LokiStreamListener(self.api, self.filter_type,
+                                                  self.statistics,
+                                                  self.subscribe)
         self.streaming_api = tweepy.streaming.Stream(self.auth,
                                                      self.stream_listener)
 
