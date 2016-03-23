@@ -51,7 +51,7 @@ class Cli:
                                             ''')
                                          )
 
-        parser.add_argument('--filter_type', dest='filter_type', required=False,
+        parser.add_argument('--filter-type', dest='filter_type', required=False,
                             type=str, default='location',
                             choices=('location', 'keyword'),
                             help=textwrap.dedent('''\
@@ -70,16 +70,22 @@ class Cli:
                             help=textwrap.dedent('''\
                                  Keywords to filter by. Only used if filter_type
                                  is keyword.'''))
+        parser.add_argument('--region-statistics', dest='region_statistics', required=False,
+                            type=bool, choices=(True, False), default=False,
+                            help=textwrap.dedent('''\
+                                 Collect and log statistics about a region being streamed.
+                                 Only works if filter-type is location and location
+                                 is defined.'''))
         parser.add_argument('--log', required=False, type=bool,
-                            choices=(True,False),
+                            choices=(True, False),
                             dest='log', default=True,
                             help=textwrap.dedent('''\
                                 Whether to enable logging.
                                 Defaults to True. Possible options are
                                 (True, False).'''))
         parser.add_argument('--logfile', required=False,
-                            dest='log_file', type=str,
+                            dest='logfile', type=str,
                             help=textwrap.dedent('''\
                                 If logging is enabled, log to
-                                this file.'''))
+                                this filename.'''))
         return parser
