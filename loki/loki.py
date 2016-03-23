@@ -9,6 +9,8 @@ This file contains the main routine for the entire package. Orchestrates the res
 # Project assets
 from loki.Harvester import Harvester
 from loki.Cli import Cli
+from loki.LokiLogger import LokiLogger
+from loki.utils import log_if_exists
 
 
 __author__ = 'Jared M Smith'
@@ -26,16 +28,32 @@ def format_keywords(keywords):
     return ",".join(fmt_keywords)
 
 
-def start_harvester(args):
+def start_harvester(args, logger=None):
     keywords = None
     if args.filter_type == 'keyword':
         keywords = format_keywords(args.keywords)
-    h = Harvester(filter_type=args.filter_type, keywords=keywords)
+    log_if_exists(logger, 'Creating harvester.', 'DEBUG')
+    h = Harvester(logger=logger, filter_type=args.filter_type, keywords=keywords)
+    log_if_exists(logger, 'Starting the stream...', 'INFO')
     h.stream()
 
 
 def main():
+    logger = None
+    logfile_name = None
+
     cli = Cli()
+    if cli.args['log']:
+        try:
+            logfile_name = cli.args['logfile']
+        except KeyError:
+            raise ValueError('Logging is enabled by the logfile name is undefined.')
+        finally:
+            if logfile_name is None:
+                raise ValueError('Logging is enabled by the logfile name is undefined.')
+        logger = LokiLogger()
+        logger.setup(logfile_name)
+        start_harvester(cli.args, logger)
     start_harvester(cli.args)
 
 
