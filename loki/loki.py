@@ -33,7 +33,9 @@ def start_harvester(args, logger=None):
     if args.filter_type == 'keyword':
         keywords = format_keywords(args.keywords)
     log_if_exists(logger, 'Creating harvester.', 'DEBUG')
-    h = Harvester(logger=logger, filter_type=args.filter_type, keywords=keywords)
+    h = Harvester(logger=logger, filter_type=args.filter_type,
+                  keywords=keywords, stats=args.statistics,
+                  subscribe=args.subscribe)
     log_if_exists(logger, 'Starting the stream...', 'INFO')
     h.stream()
 
@@ -43,9 +45,9 @@ def main():
     logfile_name = None
 
     cli = Cli()
-    if cli.args['log']:
+    if cli.args.log:
         try:
-            logfile_name = cli.args['logfile']
+            logfile_name = cli.args.logfile
         except KeyError:
             raise ValueError('Logging is enabled by the logfile name is undefined.')
         finally:
