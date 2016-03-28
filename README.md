@@ -1,5 +1,5 @@
 Loki
 ---
 
-An intelligent entity finder that ingests data from open data sources (currently only Twitter) and resolves entities that match a keyword given on the command line.
+Ingests Twitter Stream data (and other sources to come) in an abstracted way in order to perform collection, analyses, or visualization with ingested data further down the pipeline.
 
