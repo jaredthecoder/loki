@@ -11,6 +11,7 @@ from loki.Harvester import Harvester
 from loki.Cli import Cli
 from loki.LokiLogger import LokiLogger
 from loki.utils import log_if_exists, format_keywords
+from loki.models import setup_db
 
 
 __author__ = 'Jared M Smith'
@@ -35,6 +36,8 @@ def main():
     logfile_name = None
 
     cli = Cli()
+    setup_db(cli.args['sql_db_path'])
+
     if cli.args.log:
         try:
             logfile_name = cli.args.logfile
@@ -46,7 +49,8 @@ def main():
         logger = LokiLogger()
         logger.setup(logfile_name)
         start_harvester(cli.args, logger)
-    start_harvester(cli.args)
+    else:
+        start_harvester(cli.args)
 
 
 

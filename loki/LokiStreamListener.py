@@ -44,6 +44,8 @@ class LokiStreamListener(tweepy.StreamListener):
         self.sql_db_conn = sqlite3.connect(self.sql_db_path)
         self.sql_db_curs = self.sql_db_conn.cursor()
 
+        # self.f = open('sample_data.txt', 'w')
+
         if self.redis:
             import redis as redis_cls
             self.r = redis_cls.StrictRedis(host='localhost', port=6379, db=0)
@@ -97,6 +99,8 @@ class LokiStreamListener(tweepy.StreamListener):
             location_exists = True
 
         json_data = json.dumps(data)
+        # self.f.write(json_data)
+        # self.f.write('\n')
         # self.r.set(data['id_str'], json_data)
 
         if not self.location_only:

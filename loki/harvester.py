@@ -25,7 +25,7 @@ __email__ = 'jared@jaredsmith.io'
 # Harvester class consumes the twitter feed and pushes tweets onto the queue.
 class Harvester(object):
 
-    # Bounding box on US: -125.06,24.57,-67.3,49.03]
+    # Bounding box on US: -125.06,24.57,-67.3,49.03
     # Whole World Two corners:
     # SW: -57.704, -167.344
     # NE: 74.9594, 178.594
@@ -36,7 +36,7 @@ class Harvester(object):
         self.keywords = keywords
 
         self.filter_type = self.cli_args.filter_type
-        self.location = self.cli_args.location
+        self.location = [float(l) for l in self.cli_args.location.split(',')]
 
         log_if_exists(self.logger, self.location, 'DEBUG')
 

@@ -5,13 +5,6 @@ import re
 from distutils.core import setup
 
 
-version = re.search(
-    '^__version__\s*=\*"(.*)"',
-    open('loki/loki.py').read(),
-    re.M
-    ).group(1)
-
-
 with open('README.md', 'rb') as f:
     long_descr = f.read().decode('utf-8')
 
@@ -22,7 +15,7 @@ setup(
     entry_points = {
         'console_scripts': ['loki = loki.loki.main']
         },
-    version = version,
+    version = '0.1.0',
     description = 'Intelligent Entity Finder',
     long_description = long_descr,
     author = 'Jared M Smith',

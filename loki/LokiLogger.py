@@ -45,5 +45,5 @@ class LokiLogger:
         self.__logger.addHandler(stream_handler)
         rotating_file_handler = logging.handlers.RotatingFileHandler(
             self.__logfile_name,
-            maxBytes=20, backupCount=5)
+            maxBytes=20000000, backupCount=5)
         self.__logger.addHandler(rotating_file_handler)
