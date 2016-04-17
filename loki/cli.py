@@ -60,15 +60,15 @@ class Cli:
                                  put on the twitter stream. Default is
                                  location.'''))
         parser.add_argument('--location', dest='location', required=False,
-                            type=str, default="-167.344,-57.704,178.594, 74.9594",
+                            type=str, default="-125.06,24.57,-67.3,49.03",
                             help=textwrap.dedent('''\
                                  Bounding box of lats/lons.
                                  Specify comma seperated list of coordinates of four
                                  coordinate points representing the four
                                  corners of the bounding box as a string. Only used if
-                                 filter_type is location.'''))
+                                 filter-type is location.'''))
         parser.add_argument('--keywords', dest='keywords', required=False,
-                            type=list, nargs='+',
+                            type=str,
                             help=textwrap.dedent('''\
                                  Keywords to filter by.
                                  Only used if filter_type
@@ -83,7 +83,7 @@ class Cli:
                             help=textwrap.dedent('''\
                                  Whether to use redis or not to
                                  push statuses to a channel.'''))
-        parser.add_argument('--redis_channel', dest='redis_channel', required=False,
+        parser.add_argument('--redis-channel', dest='redis_channel', required=False,
                             type=str, default='loki01',
                             help=textwrap.dedent('''\
                                  If the redis option is enabled, then this is the

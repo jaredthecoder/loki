@@ -36,7 +36,7 @@ def main():
     logfile_name = None
 
     cli = Cli()
-    setup_db(cli.args['sql_db_path'])
+    # setup_db(cli.args.sql_db_path)
 
     if cli.args.log:
         try:

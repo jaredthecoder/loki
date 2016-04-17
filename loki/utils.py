@@ -14,11 +14,11 @@ __email__ = 'jared@jaredsmith.io'
 
 
 def format_keywords(keywords):
-    fmt_keywords = []
-    for term_breakdown in keywords:
-        kwd = "".join(term_breakdown)
-        fmt_keywords.append(kwd)
-    return ",".join(fmt_keywords)
+    kw_list = []
+    for kw in keywords.split(","):
+        kw_list.append(kw)
+    print(kw_list)
+    return kw_list
 
 
 def log_if_exists(logger, message, level):

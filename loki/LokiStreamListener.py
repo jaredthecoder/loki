@@ -66,12 +66,6 @@ class LokiStreamListener(tweepy.StreamListener):
 
         data['text'] = status.text
         data['user_location_str'] = status.user.location
-        data['location_place_name'] = status.place.name
-        data['location_place_full_name'] = status.place.full_name
-        data['location_place_country'] = status.place.country
-        data['location_place_country_code'] = status.place.country_code
-        data['location_place_type'] = status.place.place_type
-        data['user_time_zone'] = status.user.time_zone
         data['source'] = status.source
         data['source_url'] = status.source_url
         data['id_str'] = status.id_str
@@ -95,6 +89,12 @@ class LokiStreamListener(tweepy.StreamListener):
 
             data['lon'] = status.coordinates['coordinates'][0]
             data['lat'] = status.coordinates['coordinates'][1]
+            data['location_place_name'] = status.place.name
+            data['location_place_full_name'] = status.place.full_name
+            data['location_place_country'] = status.place.country
+            data['location_place_country_code'] = status.place.country_code
+            data['location_place_type'] = status.place.place_type
+            data['user_time_zone'] = status.user.time_zone
 
             location_exists = True
 
